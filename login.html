@@ -175,6 +175,19 @@
     .hidden {
       display: none;
     }
+
+    .mobile-group {
+        display: flex;
+        gap: 10px;
+    }
+
+    .mobile-group select {
+        flex: 0 0 80px;
+    }
+
+    .mobile-group input {
+        flex: 1;
+    }
   </style>
 </head>
 <body>
@@ -187,8 +200,21 @@
       <div class="input-group">
         <input type="email" id="signupEmail" placeholder="Email ID" />
       </div>
-      <div class="input-group">
-        <input type="number" id="signupMobile" placeholder="Mobile Number" />
+      <div class="input-group mobile-group">
+        <select id="countryCode">
+          <option value="+91">+91 (IN)</option>
+          <option value="+1">+1 (US/CA)</option>
+          <option value="+44">+44 (UK)</option>
+          <option value="+61">+61 (AU)</option>
+          <option value="+81">+81 (JP)</option>
+          <option value="+86">+86 (CN)</option>
+          <option value="+49">+49 (DE)</option>
+          <option value="+33">+33 (FR)</option>
+          <option value="+34">+34 (ES)</option>
+          <option value="+55">+55 (BR)</option>
+          <option value="+7">+7 (RU)</option>
+        </select>
+        <input type="text" id="signupMobile" placeholder="Mobile Number" />
       </div>
       <div class="input-group">
         <select id="signupGender">
@@ -230,6 +256,7 @@
       const name = document.getElementById("signupName").value.trim();
       const email = document.getElementById("signupEmail").value.trim();
       const mobile = document.getElementById("signupMobile").value.trim();
+      const countryCode = document.getElementById("countryCode").value;
       const gender = document.getElementById("signupGender").value;
       const dob = document.getElementById("signupDOB").value;
       const password = document.getElementById("signupPassword").value.trim();
@@ -254,6 +281,12 @@
         message.className = "message error";
         return;
       }
+      
+      if (password.length < 6) {
+        message.textContent = "Password must be at least 6 characters long.";
+        message.className = "message error";
+        return;
+      }
 
       if (password !== confirmPassword) {
         message.textContent = "Passwords do not match.";
@@ -261,7 +294,9 @@
         return;
       }
       
-      const userData = { name, email, mobile, gender, dob, password };
+      const fullMobile = countryCode + mobile;
+
+      const userData = { name, email, mobile: fullMobile, gender, dob, password };
       localStorage.setItem("userData", JSON.stringify(userData));
 
       message.textContent = "Successfully Signed Up!";
