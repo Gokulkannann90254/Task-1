@@ -23,10 +23,12 @@
       border-radius: 20px;
       box-shadow: 0 0 40px #00f0ff;
       backdrop-filter: blur(16px);
-      width: 420px;
+      /* Improved for mobile: Use max-width and percentage */
+      width: 90%; 
+      max-width: 420px;
       animation: fadeSlideIn 1s ease forwards;
       transition: transform 0.5s ease;
-      position: relative; /* Added for positioning the pseudo-element */
+      position: relative;
     }
     
     .container::after {
